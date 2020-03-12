@@ -6,10 +6,8 @@ require 'Connection.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
+
 $message = new stdClass();
-
-session_start();
-
 $connect = new Connection();
 $validation = new Validation();
 
@@ -22,20 +20,18 @@ if (isset($_POST['serial_no'])) {
         $message->code = 200;
         $message->msg = "Existe";
         echo json_encode($message);
-        $_SESSION['serial_no'] = $_POST['serial_no'];
     } else {
         $message->code = 404;
         $message->msg = "Número de SIM no válido";
         echo json_encode($message);
-        unset($_SESSION['serial_no']);
     }
+
 } elseif (isset($_POST['json'])) {
     $form_data = json_decode($_POST['json']);
     $userId = $validation->insertUser($connection, $form_data);
-    // stdClass Object ( [datas] => stdClass Object ( [serialNo] => 123456789 [fname] => D [lname] => P [email] => mail@mail.com [mobileno] => [date] => 03/19/2020 ) ) {"code":200,"msg":"Good job"}
-    $message->code = 200;
-    $message->msg = "Good job";
-    echo json_encode($message);
+    $productIdArray = $validation->getProductId($connection, $form_data->datas->serialNo);
+    $productId = $productIdArray['id'];
+    $validation->insertActivation($connection, $userId, $productId, $form_data->datas->date);    
 }
 
 ?>
