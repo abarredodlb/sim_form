@@ -31,6 +31,8 @@ if (isset($_POST['serial_no'])) {
     }
 } elseif (isset($_POST['json'])) {
     $form_data = json_decode($_POST['json']);
+    $userId = $validation->insertUser($connection, $form_data);
+    // stdClass Object ( [datas] => stdClass Object ( [serialNo] => 123456789 [fname] => D [lname] => P [email] => mail@mail.com [mobileno] => [date] => 03/19/2020 ) ) {"code":200,"msg":"Good job"}
     $message->code = 200;
     $message->msg = "Good job";
     echo json_encode($message);
