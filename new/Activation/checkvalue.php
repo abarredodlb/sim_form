@@ -10,7 +10,7 @@ $message = new stdClass();
 
 $connect = new Connection();
 
-$connection = $connect->connect(getenv('SERVERNAME'), getenv('DBNAME'), getenv('USERNAME'), getenv('PASSWORD'));
+$connection = $connect->connect(getenv('DBSERVERNAME'), getenv('DBNAME'), getenv('DBUSERNAME'), getenv('DBPASSWORD'));
 
 $validation = new Validation();
 
