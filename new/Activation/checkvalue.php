@@ -11,12 +11,11 @@ $message = new stdClass();
 session_start();
 
 $connect = new Connection();
+$validation = new Validation();
 
 $connection = $connect->connect(getenv('DBSERVERNAME'), getenv('DBNAME'), getenv('DBUSERNAME'), getenv('DBPASSWORD'));
 
 if (isset($_POST['serial_no'])) {
-    $validation = new Validation();
-
     $isValid = $validation->validate($connection, $_POST['serial_no']);
 
     if ($isValid) {
