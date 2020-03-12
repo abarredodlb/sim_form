@@ -63,7 +63,7 @@ function clearVal(i){
 function checkSerialno(e){
 //	console.log("Inside func");
 	$("#name_status").html('');
-	setTimeout(check_num,5000);
+	setTimeout(check_num,500);
 //	check_num(e);
 }
 function check_num(e){
