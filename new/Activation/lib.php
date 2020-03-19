@@ -5,9 +5,14 @@ class Validation {
     public function validate($connection, $serialNumber) {
         $getProductId = $this->getProductId($connection, $serialNumber);
         if ($getProductId) {
-            return true;
+            $isActive = $this->getActivationId($connection, $getProductId['id']);
+            if ($isActive) {
+                return 2;
+            } else {
+                return 1;
+            }
         } else {
-            return false;
+            return 3;
         }
     }
 
