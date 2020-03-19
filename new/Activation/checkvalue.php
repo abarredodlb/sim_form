@@ -16,14 +16,24 @@ $connection = $connect->connect(getenv('DBSERVERNAME'), getenv('DBNAME'), getenv
 if (isset($_POST['serial_no'])) {
     $isValid = $validation->validate($connection, $_POST['serial_no']);
 
-    if ($isValid) {
-        $message->code = 200;
-        $message->msg = "Existe";
-        echo json_encode($message);
-    } else {
-        $message->code = 404;
-        $message->msg = "Número de SIM no válido";
-        echo json_encode($message);
+    switch ($isValid) {
+        case 1:
+            $message->code = 200;
+            $message->msg = "";
+            echo json_encode($message);
+            break;
+
+        case 2:
+            $message->code = 403;
+            $message->msg = "SIM en proceso de activación";
+            echo json_encode($message);
+            break;
+        
+        default:
+            $message->code = 404;
+            $message->msg = "Número de SIM no válido";
+            echo json_encode($message);
+            break;
     }
 
 } elseif (isset($_POST['json'])) {
