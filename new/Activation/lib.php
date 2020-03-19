@@ -5,9 +5,14 @@ class Validation {
     public function validate($connection, $serialNumber) {
         $getProductId = $this->getProductId($connection, $serialNumber);
         if ($getProductId) {
-            return true;
+            $isActive = $this->getActivationId($connection, $getProductId['id']);
+            if ($isActive) {
+                return 2;
+            } else {
+                return 1;
+            }
         } else {
-            return false;
+            return 3;
         }
     }
 
@@ -19,6 +24,18 @@ class Validation {
         ");
         $stmt->execute(array(
             ":serialNumber" => $serialNo
+        ));
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getActivationId($connection, $productId) {
+        $stmt = $connection->prepare("
+            SELECT id
+            FROM activations
+            WHERE product_id = :productId
+        ");
+        $stmt->execute(array(
+            ":productId" => $productId
         ));
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

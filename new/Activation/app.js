@@ -84,17 +84,21 @@ function check_num(e){
 	//		$("#name_status").html(response.msg);
 			//console.log("Treu Response "+response.msg);
 			if(response.code==200)	
-		{
-			//console.log(response.code);
-			$("#name_status").html('');
-			return true;
-		}
-			else
-		{
-			//console.log("Cheeee  "+response.code);	     
-			$("#name_status").html(response.msg); 
-			return false;	
-		}
+			{
+				//console.log(response.code);
+				$("#name_status").html('');
+				return true;
+			}
+			else if (response.code == 403) {
+				$("#name_status").html(response.msg); 
+				return false;
+			}
+				else
+			{
+				//console.log("Cheeee  "+response.code);	     
+				$("#name_status").html(response.msg); 
+				return false;
+			}
 		}	
 
 		});	
