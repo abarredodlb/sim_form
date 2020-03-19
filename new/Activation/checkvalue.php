@@ -18,8 +18,16 @@ if (isset($_POST['serial_no'])) {
 
     switch ($isValid) {
         case 1:
-            $message->code = 200;
-            $message->msg = "";
+            $needsPassport = $validation->needsPassport($connection, $_POST['serial_no']);
+            if ($needsPassport) {
+                $message->code = 200;
+                $message->msg = "";
+                $message->passport = 2;
+            } else {
+                $message->code = 200;
+                $message->msg = "";
+                $message->passport = 1;
+            }
             echo json_encode($message);
             break;
 
