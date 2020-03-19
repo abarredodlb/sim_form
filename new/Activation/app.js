@@ -63,7 +63,7 @@ function clearVal(i){
 function checkSerialno(e){
 //	console.log("Inside func");
 	$("#name_status").html('');
-	setTimeout(check_num,5000);
+	setTimeout(check_num,500);
 //	check_num(e);
 }
 function check_num(e){
@@ -84,17 +84,27 @@ function check_num(e){
 	//		$("#name_status").html(response.msg);
 			//console.log("Treu Response "+response.msg);
 			if(response.code==200)	
-		{
-			//console.log(response.code);
-			$("#name_status").html('');
-			return true;
-		}
-			else
-		{
-			//console.log("Cheeee  "+response.code);	     
-			$("#name_status").html(response.msg); 
-			return false;	
-		}
+			{
+				//console.log(response.code);
+				if (response.passport == 1) {
+					$('.conditional').hide();
+				} else if (response.passport == 2) {
+					$('.conditional').show();
+				}
+
+				$("#name_status").html('');
+				return true;
+			}
+			else if (response.code == 403) {
+				$("#name_status").html(response.msg); 
+				return false;
+			}
+				else
+			{
+				//console.log("Cheeee  "+response.code);	     
+				$("#name_status").html(response.msg);
+				return false;
+			}
 		}	
 
 		});	
