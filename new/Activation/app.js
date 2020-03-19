@@ -86,6 +86,12 @@ function check_num(e){
 			if(response.code==200)	
 			{
 				//console.log(response.code);
+				if (response.passport == 1) {
+					$('.conditional').hide();
+				} else if (response.passport == 2) {
+					$('.conditional').show();
+				}
+
 				$("#name_status").html('');
 				return true;
 			}
@@ -96,7 +102,7 @@ function check_num(e){
 				else
 			{
 				//console.log("Cheeee  "+response.code);	     
-				$("#name_status").html(response.msg); 
+				$("#name_status").html(response.msg);
 				return false;
 			}
 		}	

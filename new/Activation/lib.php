@@ -16,6 +16,27 @@ class Validation {
         }
     }
 
+    public function needsPassport($connection, $serialNumber) {
+        $productType = $this->getProductType($connection, $serialNumber);
+        if ($productType['product_type'] == 1) {
+            return false;
+        } elseif ($productType['product_type'] == 2) {
+            return true;
+        }
+    }
+
+    public function getProductType($connection, $serialNumber) {
+        $stmt = $connection->prepare("
+            SELECT product_type
+            FROM products
+            WHERE serial_number = :serialNumber
+        ");
+        $stmt->execute(array(
+            ":serialNumber" => $serialNumber
+        ));
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function getProductId($connection, $serialNo) {
         $stmt = $connection->prepare("
             SELECT id
