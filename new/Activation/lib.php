@@ -23,6 +23,18 @@ class Validation {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function getActivationId($connection, $productId) {
+        $stmt = $connection->prepare("
+            SELECT id
+            FROM activations
+            WHERE product_id = :productId
+        ");
+        $stmt->execute(array(
+            ":productId" => $productId
+        ));
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function insertUser($connection, $formData) {
         $firstName = $formData->datas->fname;
         $lastName = $formData->datas->lname;
